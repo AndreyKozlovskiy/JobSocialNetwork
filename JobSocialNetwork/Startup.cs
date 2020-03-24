@@ -1,15 +1,14 @@
-using BusinessLogic;
-using BusinessLogic.Models;
 using BusinessLogic.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
-using System.Linq;
 using BusinessLogic.Repositories;
+using BusinessLogic.Services.Contracts;
+using BusinessLogic.Repositories.Contracts;
+using BusinessLogic.Contexts;
 
 namespace JobSocialNetwork
 {
@@ -24,14 +23,11 @@ namespace JobSocialNetwork
 
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddDbContext<ApplicationContext>(options =>
-   options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
-   sqlServerOptionsAction: sqlOptions =>
-   {
-       sqlOptions.EnableRetryOnFailure();
-   }));
+                options.UseSqlServer("Server=DESKTOP-MA2QV8N\\SQLEXPRESS;Database=JobSocialNetwork;Integrated Security=True"));
             services.AddTransient<IDataContext, DataContext>();
- 
+            services.AddSignalR();
             services.AddTransient(typeof(IUserRepository), typeof(UserRepository));
             services.AddTransient(typeof(IResumeRepository), typeof(ResumeRepository));
             services.AddTransient(typeof(IVacancyRepository), typeof(VacancyRepository));
@@ -41,14 +37,13 @@ namespace JobSocialNetwork
             services.AddTransient(typeof(ISkillService), typeof(SkillService));
             services.AddTransient(typeof(IResumeService), typeof(ResumeService));
             services.AddTransient<ApplicationService>();
-
-            services.AddControllers();
+            services.AddMvcCore();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            
+            app.UseStaticFiles();
+
             if (env.IsDevelopment())
             {
             }
@@ -56,7 +51,6 @@ namespace JobSocialNetwork
 
             app.UseEndpoints(endpoints =>
             {
-
                 endpoints.MapControllerRoute(
                             name: "default",
                             pattern: "{controller=Home}/{action=Index}/{id?}");

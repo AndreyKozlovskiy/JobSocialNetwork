@@ -1,4 +1,6 @@
-﻿using BusinessLogic.Models;
+﻿using BusinessLogic.Contexts;
+using BusinessLogic.Models;
+using BusinessLogic.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;

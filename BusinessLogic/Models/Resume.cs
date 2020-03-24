@@ -12,16 +12,16 @@ namespace BusinessLogic.Models
         }
 
         [Key]
-        public int ResumeId { get; set; }
+        public virtual int ResumeId { get; set; }
         [MaxLength(300)]
-        public string ShortDescription { get; set; }
+        public virtual string ShortDescription { get; set; }
         [Required]
         [MaxLength(2000)]
-        public string FullDescription { get; set; }
+        public virtual string FullDescription { get; set; }
         [Required]
-        public User User { get; set; }
+        public virtual User User { get; set; }
         [ForeignKey("User")]
-        public int UserId { get; set; }
+        public virtual int UserId { get; set; }
         public virtual List<Skill> Skills { get; set; }
     }
 }

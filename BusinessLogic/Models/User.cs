@@ -9,29 +9,31 @@ namespace BusinessLogic.Models
         {
             Vacancies = new List<Vacancy>();
             Resumes = new List<Resume>();
+            Messages = new List<Message>();
         }
 
         [Key]
-        public int Id { get; set; }
+        public virtual int Id { get; set; }
         [Required]
         [MaxLength(50)]
-        public string UserName { get; set; }
+        public virtual string UserName { get; set; }
         [Required]
         [MaxLength(50)]
-        public string Password { get; set; }
+        public virtual string Password { get; set; }
         [Required]
         [MaxLength(100)]
-        public string Mail { get; set; }
+        public virtual string Mail { get; set; }
         [Required]
         [MaxLength(200)]
-        public string FirstName { get; set; }
+        public virtual string FirstName { get; set; }
         [Required]
         [MaxLength(200)]
         public string SecondName { get; set; }
         [Required]
         [MaxLength(100)]
-        public string City { get; set; }
+        public virtual string City { get; set; }
         public virtual List<Vacancy> Vacancies { get; set; }
         public virtual List<Resume> Resumes { get; set; }
+        public virtual List<Message> Messages { get; set; }
     }
 }

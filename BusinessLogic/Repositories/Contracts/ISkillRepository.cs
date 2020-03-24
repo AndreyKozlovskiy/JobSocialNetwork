@@ -1,6 +1,6 @@
 ﻿using BusinessLogic.Models;
 
-namespace BusinessLogic.Repositories
+namespace BusinessLogic.Repositories.Contracts
 {
     public interface ISkillRepository : IRepository<Skill>
     {

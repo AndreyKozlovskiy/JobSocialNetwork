@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 
-namespace BusinessLogic.Repositories
+namespace BusinessLogic.Repositories.Contracts
 {
     public interface IRepository<T>
     {

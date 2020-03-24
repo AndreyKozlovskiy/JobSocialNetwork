@@ -51,7 +51,7 @@ namespace BusinessLogic.Migrations
                 {
                     VacancyId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ShortDescriptin = table.Column<string>(maxLength: 300, nullable: true),
+                    ShortDescription = table.Column<string>(maxLength: 300, nullable: true),
                     FullDescription = table.Column<string>(maxLength: 2000, nullable: false),
                     UserId = table.Column<int>(nullable: false)
                 },

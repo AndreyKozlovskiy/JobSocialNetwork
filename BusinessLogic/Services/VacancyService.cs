@@ -1,5 +1,7 @@
 ﻿using BusinessLogic.Models;
-using BusinessLogic.Repositories;
+using BusinessLogic.Repositories.Contracts;
+using BusinessLogic.Services.Contracts;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BusinessLogic.Services
@@ -15,6 +17,11 @@ namespace BusinessLogic.Services
         public async Task AddAsync(Vacancy Vacancy)
         {
             await VacancyRepository.AddAsync(Vacancy);
+        }
+
+        public Vacancy Get(int itemId)
+        {
+            return VacancyRepository.Get().FirstOrDefault(x => x.VacancyId == itemId);
         }
 
         public async Task RemoveAsync(int VacancyId)

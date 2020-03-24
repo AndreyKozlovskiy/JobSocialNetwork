@@ -6,13 +6,13 @@ namespace BusinessLogic.Models
     public class Skill
     {
         [Key]
-        public int SkillId { get; set; }
+        public virtual int SkillId { get; set; }
         [Required]
         [MaxLength(50)]
-        public string SkillName { get; set; }
+        public virtual string SkillName { get; set; }
         [Required]
-        public Resume Resume { get; set; }
+        public virtual Resume Resume { get; set; }
         [ForeignKey("Resume")]
-        public int ResumeId { get; set; }
+        public virtual int ResumeId { get; set; }
     }
 }

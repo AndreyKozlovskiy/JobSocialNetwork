@@ -1,12 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLogic
+namespace BusinessLogic.Contexts
 {
-    public class DataContext:IDataContext
+    public class DataContext : IDataContext
     {
         private readonly ApplicationContext appContext;
 

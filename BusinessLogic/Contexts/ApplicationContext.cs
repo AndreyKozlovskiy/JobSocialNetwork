@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
-namespace BusinessLogic
+namespace BusinessLogic.Contexts
 {
     public class ApplicationContext : DbContext
     {
@@ -10,19 +10,15 @@ namespace BusinessLogic
         public DbSet<Resume> Resumes { get; set; }
         public DbSet<Vacancy> Vacancies { get; set; }
         public DbSet<Skill> Skills { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
         {
-
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(
-                @"Server=DESKTOP-MA2QV8N\SQLEXPRESS;Database=JobSocialNetwork;Integrated Security=True");
+            // Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) => modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
     }
 }

@@ -1,5 +1,7 @@
-﻿using BusinessLogic.Models;
-using BusinessLogic.Repositories;
+﻿using BusinessLogic.Contexts;
+using BusinessLogic.Models;
+using BusinessLogic.Repositories.Contracts;
+using BusinessLogic.Services.Contracts;
 using System.Threading.Tasks;
 
 namespace BusinessLogic.Services
