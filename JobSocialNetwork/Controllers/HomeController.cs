@@ -15,11 +15,9 @@ namespace JobSocialNetwork
         }
 
         [HttpGet]
-        public async Task<string> Index()
+        public async Task<IActionResult> Index()
         {
-            var user = new User() { FirstName = "Andrey", SecondName = "Kozlovskiy", Password = "12345678", City = "Monako", Mail = "car@gmail.com", UserName = "caratos" };
-            await app.AddUserAsync(user);
-            return app.userService.Get(user.Id).UserName;
+            return RedirectToAction("Login", "Account");
         }
     }
 }

@@ -9,6 +9,8 @@ using BusinessLogic.Repositories;
 using BusinessLogic.Services.Contracts;
 using BusinessLogic.Repositories.Contracts;
 using BusinessLogic.Contexts;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 
 namespace JobSocialNetwork
 {
@@ -27,7 +29,7 @@ namespace JobSocialNetwork
             services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer("Server=DESKTOP-MA2QV8N\\SQLEXPRESS;Database=JobSocialNetwork;Integrated Security=True"));
             services.AddTransient<IDataContext, DataContext>();
-            services.AddSignalR();
+            
             services.AddTransient(typeof(IUserRepository), typeof(UserRepository));
             services.AddTransient(typeof(IResumeRepository), typeof(ResumeRepository));
             services.AddTransient(typeof(IVacancyRepository), typeof(VacancyRepository));
@@ -37,7 +39,14 @@ namespace JobSocialNetwork
             services.AddTransient(typeof(ISkillService), typeof(SkillService));
             services.AddTransient(typeof(IResumeService), typeof(ResumeService));
             services.AddTransient<ApplicationService>();
-            services.AddMvcCore();
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = new PathString("/Account/Login");
+                });
+            services.AddSignalR();
+            services.AddControllersWithViews();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -46,8 +55,20 @@ namespace JobSocialNetwork
 
             if (env.IsDevelopment())
             {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
             }
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {

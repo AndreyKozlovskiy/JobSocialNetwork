@@ -1,0 +1,24 @@
+﻿@model BusinessLogic.ViewModels.LoginModel
+
+<h2>Sign in</h2>
+
+<a asp-action="Register" asp-controller="Account">Sign in</a>
+
+<form asp-action="Login" asp-controller="Account" asp-anti-forgery="true">
+    <div class="validation" asp-validation-summary="ModelOnly" />
+    <div>
+        <div class="form-group">
+            <label asp-for="UserName">UserName</label>
+            <input type="text" asp-for="UserName" />
+            <span asp-validation-for="UserName" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Password">Password</label>
+            <input asp-for="Password" />
+            <span asp-validation-for="Password" />
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Войти" class="btn btn-outline-dark" />
+        </div>
+    </div>
+</form>
