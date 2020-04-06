@@ -1,9 +1,10 @@
 ﻿using System.Threading.Tasks;
 using BusinessLogic.Models;
 using BusinessLogic.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace JobSocialNetwork
+namespace JobSocialNetwork.Controllers
 {
     public class HomeController : Controller
     {
@@ -14,10 +15,17 @@ namespace JobSocialNetwork
             app = applicationService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Index()
+        [Authorize]
+        public async Task<string> Indexator()
         {
-            return RedirectToAction("Login", "Account");
+            var user = User.Identity;
+            return user.Name;
         }
+        
+        public async Task<string> Index()
+        {
+            return "Hi";
+        }
+
     }
 }

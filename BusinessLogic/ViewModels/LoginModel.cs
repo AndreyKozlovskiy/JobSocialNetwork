@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace BusinessLogic.ViewModels
 {
     public class LoginModel
     {
-        [Required(ErrorMessage = "Enter UserName")]
-        [MaxLength(50, ErrorMessage = "Max length of UserName is 50 symbols")]
+        [Required]
         public string UserName { get; set; }
-
-        [Required(ErrorMessage = "Enter password")]
-        [DataType(DataType.Password)]
+        [Required]
         public string Password { get; set; }
     }
 }

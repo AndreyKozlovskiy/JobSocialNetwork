@@ -9,7 +9,7 @@ namespace BusinessLogic.Services
 {
     public class ApplicationService
     {
-        public enum StatesOfRegistration 
+        public enum StatesOfRegistration
         {
             Ok,
             WrongUserName,
@@ -83,7 +83,8 @@ namespace BusinessLogic.Services
         public async Task<User> GetUserByName(string UserName)
         {
             var users = userRepository.Get();
-            return await users.FirstOrDefaultAsync(x => x.UserName == UserName);
+            var user = await users.FirstOrDefaultAsync(x => x.UserName == UserName);
+            return user;
         }
     }
 }

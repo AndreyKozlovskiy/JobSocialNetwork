@@ -4,48 +4,44 @@ using BusinessLogic.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace JobSocialNetwork.Controllers
 {
-    public class AccountContoller : Controller
+    [Controller]
+    public class AccountController : Controller
     {
         public readonly ApplicationService app;
 
-        public AccountContoller(ApplicationService applicationService)
+        public AccountController(ApplicationService applicationService)
         {
             app = applicationService;
         }
 
         [HttpGet]
-        public string Login()
+        public async Task<IActionResult> Login()
         {
-            return "Bye";
-            //return View();
+            return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginModel model)
         {
-            if (ModelState.IsValid)
+            var user = await app.userRepository.Get().FirstOrDefaultAsync(x => x.UserName == model.UserName && x.Password == model.Password);
+            if (user != null)
             {
-                var user = await app.GetUserByName(model.UserName);
-                if (user != null)
-                {
-                    if (user.Password == model.Password)
-                    {
-                        await Authenticate(model.UserName);
-
-                        return RedirectToAction("Index", "Home");
-                    }
-                }
-                ModelState.AddModelError("", "Incorrect UserName or password");
+                await Authenticate(model.UserName);
+                return RedirectToAction("Indexator", "Home");
             }
-            return View(model);
+            ModelState.AddModelError("", "Incorrect UserName or password");
+            return View();
         }
+
         [HttpGet]
         public IActionResult Register()
         {
@@ -93,9 +89,9 @@ namespace JobSocialNetwork.Controllers
         private async Task Authenticate(string userName)
         {
             var claims = new List<Claim>
-            {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
-            };
+                {
+                    new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
+                };
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
